@@ -1,0 +1,12 @@
+name: YOUR_APP_NAME
+description: App Description
+ignoreFiles: .git
+modules:
+- name: YOUR_MODULE_NAME
+  language: go1.x
+  web: chi
+  description: Module description
+  functions:
+  - name: YOUR_FUNCTION_NAME
+    entry: entry.go
+    description: the entry point for the function
