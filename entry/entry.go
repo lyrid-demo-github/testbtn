@@ -1,9 +1,9 @@
 package YOUR_FUNCTION_NAME
 
 import (
-	"github.com/go-chi/chi"
-    "github.com/go-chi/chi/middleware"
-    "net/http"
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
+	"net/http"
 	"os"
 	"path/filepath"
 )
@@ -14,7 +14,6 @@ func Initialize() *chi.Mux {
 
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
-
 
 	FileServerWithIndexHandlerFallback(r, os.Getenv("PUBLIC_PATH"), os.Getenv("DIST_FOLDER"))
 
@@ -31,15 +30,15 @@ func FileServerWithIndexHandlerFallback(r chi.Router, path string, localpath str
 	}
 	path += "*"
 
-	r.Get(path,  func( res http.ResponseWriter, req *http.Request ) {
+	r.Get(path, func(res http.ResponseWriter, req *http.Request) {
 		// find the file in the static file dir first
 		f, err := filesDir.Open(req.URL.Path)
 		if err != nil {
 			// if not found then serve the index html with the route....let the frontend takes care of it
-			http.ServeFile( res, req, filepath.Join( filepath.Join(workDir, localpath), "/" + os.Getenv("INDEX_HOME")) )
+			http.ServeFile(res, req, filepath.Join(filepath.Join(workDir, localpath), "/"+os.Getenv("INDEX_HOME")))
 			return
 		}
 		defer f.Close()
 		http.FileServer(filesDir).ServeHTTP(res, req)
-	} )
+	})
 }
