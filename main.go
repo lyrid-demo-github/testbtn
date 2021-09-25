@@ -3,7 +3,7 @@ package main
 import (
     "net/http"
 
-	entry "YOUR_APP_NAME.YOUR_MODULE_NAME/YOUR_FUNCTION_NAME"
+	entry "go1x_chi.template/entry"
 	"github.com/joho/godotenv"
 )
 
